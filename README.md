@@ -3,6 +3,9 @@ Learning MERN Stack (MongoDB, Express.js, React.js, Node.js) while building fina
 
 Inspired by <strong>NextCapital</strong>
 
+#### Don't use it yet.
+I am still adding some changes.
+
 ### TODO:
  * [ ] Connect to MongoDB
  * [ ] Allow user to signup/in or third-party authentication
