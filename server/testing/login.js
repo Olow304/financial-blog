@@ -3,7 +3,7 @@ import Validator from 'validator';
 
 /*
     Validating user-login
-    @ checking is email or password is empty of invalid
+    @ checking is email or password is empty or invalid
 */
 
 module.exports = function validLoginInput (data){
