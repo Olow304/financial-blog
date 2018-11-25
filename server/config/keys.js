@@ -1,3 +1,3 @@
 module.exports = {
-    ApiKey: "secret_key"
+    secretOrKey: "secret_key"
 };

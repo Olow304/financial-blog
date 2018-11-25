@@ -1,6 +1,6 @@
 import keys from './keys';
 import { ExtractJwt } from 'passport-jwt';
-import { Strategy } from 'passport-jwt';
+import { Strategy as JwtStrat} from 'passport-jwt';
 import User from '../models/User';
 
 /*
@@ -12,12 +12,12 @@ import User from '../models/User';
 const options = {}
 
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-options.ApiKey = keys.ApiKey;
+options.secretOrKey = keys.secretOrKey;
 
 export default passport => {
     passport.use(
-        new Strategy(options, (jwt_payload, done) => {
-            userInfo.findById(jwt_payload.id)
+        new JwtStrat(options, (jwt_payload, done) => {
+            User.findById(jwt_payload.id)
             .then(user => {
                 if(user){
                     return done(null, user)

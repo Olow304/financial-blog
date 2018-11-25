@@ -17,6 +17,7 @@
     "aframe-react": "^4.4.0",
     "alphavantage": "^1.1.1",
     "ar.js": "^1.6.2",
+    "concurrently": "^4.1.0",
     "d3": "^5.7.0",
     "express": "^4.16.3",
     "path": "^0.12.7",

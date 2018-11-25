@@ -6,7 +6,7 @@ import Validator from 'validator';
     @ checking is email or password is empty of invalid
 */
 
-moduel.exports = validLoginInput = (data) => {
+module.exports = function validLoginInput (data){
     let errors = {}
     data.email = !isValid(data.email) ? data.email : null;
     data.password = !isValid(data.password) ? data.password : null;

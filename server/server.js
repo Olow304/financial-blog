@@ -1,5 +1,5 @@
 // Libraries
-import bp from 'body-parser'
+import bodyParser from 'body-parser'
 import express from 'express'
 import passport from 'passport'
 import mongoose from 'mongoose'
@@ -21,21 +21,30 @@ const PORT = process.env.PORT || 5000
 const server = express()
 const path = require('path')
 
-// User the body-parser middleware
-server.use(bp.urlencoded({extended: true}))
-server.use(bp.json())
-server.use(cors())
-
 server.use(express.static(path.join(__dirname, "client/build")))
 
 // connect to DB
-mongoose.connect(config.DB, {useNewUrlParser: true}).then(() => {
-    console.log("MongoDB Connected.")
-}, err => {
-    console.log(err)
-})
+mongoose
+  .connect(
+    config.DB,
+    { useNewUrlParser: true }
+  )
+  .then(
+    () => {
+      console.log("Database is connected");
+    },
+    err => {
+      console.log("Can not connect to the database" + err);
+    }
+  );
+
+// User the body-parser middleware
+server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({extended: true}))
+server.use(cors())
 
 server.use(passport.initialize())
+
 require("./config/passport").default(passport)
 
 // Assign routes!

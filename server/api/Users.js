@@ -5,7 +5,7 @@ import passport from 'passport'
 import Bcrypt from 'bcryptjs'
 
 // inside modules
-import user from '../models/User'
+import User from '../models/User'
 import ValidLogin from '../testing/login'
 import ValidRegister from '../testing/register'
 import keys from '../config/keys'
@@ -16,39 +16,44 @@ import keys from '../config/keys'
 
 const router = express.Router()
 
+// For testing purpose
+router.get("/test", (req, res) => res.json({ msg: "User route works" }));
+
+
 // @route /register
 router.post("/register", (req, res) => {
     //send 400 error with validation errors if not valid.
     const {errors, isValid} = ValidRegister(req.body);
+
     if(!isValid){
         return res.status(400).json(errors)
     }
 
     // check to see if the email already in the database
-    user.findOne({email: req.body.email}).then(user => {
+    User.findOne({email: req.body.email}).then(user => {
         if(user){
             errors.email = "Email already exists"
             return res.status(400).json(errors)
-        }
-
-        // if user is not found, create it
-        const newUser = new user({
-            username: req.body.username, 
-            email: req.body.email,
-            passport: req.body.passport
-        })
-
-        // for security concern let's encrypt their password
-        const saltRounds = 10
-        Bcrypt.getSalt(saltRounds, function(err, salt){
-            Bcrypt.hash(newUser.passport, salt, function(err, hash){
-                if(err){
-                    throw err
-                }
-                newUser.passport = hash
-                newUser.save().then(user =>res.json(user)).catch(err)
+        }else{
+            // if user is not found, create it
+            const newUser = new User({
+                username: req.body.username, 
+                email: req.body.email,
+                password: req.body.password
             })
-        })
+
+            // for security concern let's encrypt their password
+            const saltRounds = 10
+            Bcrypt.getSalt(saltRounds, function(err, salt){
+                Bcrypt.hash(newUser.password, salt, function(err, hash){
+                    if(err){
+                        throw err
+                    }
+                    newUser.password = hash
+                    newUser.save().then(user =>res.json(user)).catch(err)
+                })
+            })
+        }
     })
 })
 

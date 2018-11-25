@@ -1,44 +1,44 @@
-import isValid from '../empty/isEmpty'
-import Valid from 'validator'
+import isEmpty from '../empty/isEmpty'
+import Validator from 'validator'
 
 /*
     Validating user-register page
     @ checking is email or password is empty of invalid
 */
 
-module.exports = validRegister(data) => {
+module.exports = function validRegister(data){
     let errors = {}
-    data.username = !isValid(data.username) ? data.username : null;
-    data.email = !isValid(data.email) ? data.email : null;
-    data.password = !isValid(data.password) ? data.password : null;
-    data.comfirmPassword = !isValid(data.comfirmPassword) ? data.comfirmPassword : null;
+    data.username = !isEmpty(data.username) ? data.username : "";
+    data.email = !isEmpty(data.email) ? data.email : "";
+    data.password = !isEmpty(data.password) ? data.password : "";
+    //data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
-    if(!Valid.isLength(data.username, {min: 3, max: 20})) {
+    if(!Validator.isLength(data.username, {min: 3, max: 20})) {
         errors.username = "Username must be between 3 and 20 characters"
     }
-    if(Valid.isEmpty(data.name)){
+    if(Validator.isEmpty(data.username)){
         errors.username = "username is required"
     }
-    if(!Valid.isEmail(data.email)){
-        errors.email = "invalid email address"
-    }
-    if(Valid.isEmpty(data.email)){
+    if(Validator.isEmpty(data.email)){
         errors.email = "email is required"
     }
-
-    if(!Valid.isLength(data.password, {min: 5, max: 20})){
-        errors.password = "passwrod must be between 3 and 20 characters"
+    if(!Validator.isEmail(data.email)){
+        errors.email = "invalid email address"
     }
-    if(Valid.isEmpty(data.password)){
+    if(Validator.isEmpty(data.password)){
         errors.password = "password is required"
     }
-    if(Valid.isEmpty(data.comfirmPassword)){
-        errors.comfirmPassword = "password is required"
+    if(!Validator.isLength(data.password, {min: 5, max: 20})){
+        errors.password = "passwrod must be between 3 and 20 characters"
     }
-    if(!Valid.equals(data.password, data.comfirmPassword)){
-        errors.comfirmPassword = "password does not match"
-    }
-    else return {
+    // if(Validator.isEmpty(data.password2)){
+    //     errors.password2 = "password is required"
+    // }
+    // if(!Validator.equals(data.password, data.password2)){
+    //     errors.password2 = "password does not match"
+    // }
+     
+    return {
         errors,
         isValid: isEmpty(errors)
     }

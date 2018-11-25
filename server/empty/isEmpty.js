@@ -1,6 +1,6 @@
-const isValid = (object) => {
-    object === undefined || object === null || 
-    (typeof object === 'object' && Object.keys(object).length === 0) || 
-    (typeof object === 'string' && object.trim().length === 0)
+const isEmpty = (value) => {
+    value === undefined || value === null || 
+    (typeof value === 'object' && Object.keys(value).length === 0) || 
+    (typeof value === 'string' && value.trim().length === 0)
 }
-export default isValid;
+export default isEmpty;
